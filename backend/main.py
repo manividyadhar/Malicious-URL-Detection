@@ -238,23 +238,29 @@ if __name__ == "__main__":
     # Run the API server
     # CRITICAL: host="0.0.0.0" allows connections from localhost, 127.0.0.1, and network
     # This is required for Chrome extensions to connect
+    # For Render: Use PORT environment variable, disable reload in production
+    import os
+    
+    port = int(os.environ.get("PORT", 8000))
+    reload = os.environ.get("ENV", "production") != "production"
+    
     print("=" * 60)
     print("Starting Malicious URL Detection API")
     print("=" * 60)
     print(f"Server will be available at:")
-    print(f"  - http://localhost:8000")
-    print(f"  - http://127.0.0.1:8000")
-    print(f"  - http://0.0.0.0:8000")
+    print(f"  - http://localhost:{port}")
+    print(f"  - http://127.0.0.1:{port}")
+    print(f"  - http://0.0.0.0:{port}")
     print("=" * 60)
-    print("API Documentation: http://localhost:8000/docs")
-    print("Health Check: http://localhost:8000/health")
+    print(f"API Documentation: http://localhost:{port}/docs")
+    print(f"Health Check: http://localhost:{port}/health")
     print("=" * 60)
     
     uvicorn.run(
         "main:app",
-        host="0.0.0.0",  # Bind to all interfaces (required for extensions)
-        port=8000,
-        reload=True,
+        host="0.0.0.0",  # Bind to all interfaces (required for extensions and Render)
+        port=port,  # Use PORT env var for Render, default 8000 for local
+        reload=reload,  # Disable reload in production (Render)
         log_level="info",
         access_log=True  # Log all requests for debugging
     )
