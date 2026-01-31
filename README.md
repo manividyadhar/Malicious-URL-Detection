@@ -35,6 +35,34 @@ A comprehensive malicious URL detection system with a browser extension frontend
 └─────────────────┘         └──────────────────┘         └──────────────┘
 ```
 
+## 🚀 Quick Start from GitHub
+
+### Clone and Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/manividyadhar/Malicious-URL-Detection.git
+cd Malicious-URL-Detection
+
+# Navigate to backend
+cd backend
+
+# Create virtual environment (recommended)
+python -m venv venv
+venv\Scripts\activate  # Windows
+# source venv/bin/activate  # Linux/Mac
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the backend server
+python main.py
+```
+
+The API will be available at `http://localhost:8000`
+
+**See `GITHUB_SETUP.md` for detailed instructions.**
+
 ## 🚀 Installation
 
 ### Prerequisites
