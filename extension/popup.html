@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Malicious URL Detector</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 400px;
+      min-height: 300px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+    }
+
+    .container {
+      background: white;
+      margin: 10px;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #667eea;
+      text-align: center;
+    }
+
+    .input-section {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      flex: 1;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-scan {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-scan:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-scan:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-current {
+      background: #764ba2;
+      color: white;
+    }
+
+    .btn-current:hover {
+      background: #5d3a7a;
+    }
+
+    .result-section {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-section.show {
+      display: block;
+    }
+
+    .verdict {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .verdict.safe {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .verdict.suspicious {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .verdict.malicious {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .risk-score {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin: 10px 0;
+      color: #667eea;
+    }
+
+    .reasons {
+      margin-top: 15px;
+    }
+
+    .reasons h3 {
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: #666;
+    }
+
+    .reasons ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .reasons li {
+      padding: 8px;
+      margin-bottom: 5px;
+      background: #f8f9fa;
+      border-left: 3px solid #667eea;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #667eea;
+    }
+
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      display: none;
+      white-space: pre-line;
+      line-height: 1.5;
+    }
+
+    .error.show {
+      display: block;
+    }
+
+    .info {
+      font-size: 12px;
+      color: #666;
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🛡️ URL Security Scanner</h1>
+    <p style="text-align: center; font-size: 12px; color: #666; margin-bottom: 15px;">
+      Automatically scanning current page...
+    </p>
+    
+    <div class="input-section">
+      <input type="text" id="urlInput" placeholder="Enter URL to scan or click 'Scan Current Page'">
+      <div class="button-group">
+        <button class="btn-scan" id="scanBtn">Scan URL</button>
+        <button class="btn-current" id="currentBtn">Rescan Current Page</button>
+      </div>
+    </div>
+
+    <div id="loading" class="loading" style="display: none;">
+      <div class="spinner"></div>
+      <p>Scanning URL...</p>
+    </div>
+
+    <div id="error" class="error"></div>
+
+    <div id="result" class="result-section">
+      <div id="verdict" class="verdict"></div>
+      <div id="riskScore" class="risk-score"></div>
+      <div class="reasons">
+        <h3>Analysis Details:</h3>
+        <ul id="reasonsList"></ul>
+      </div>
+      <div class="info" id="info"></div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

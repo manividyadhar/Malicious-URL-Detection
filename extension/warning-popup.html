@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Warning</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      padding: 20px;
+      background: #f8f9fa;
+    }
+
+    .warning-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .warning-header {
+      padding: 20px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .warning-header.safe {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .warning-header.suspicious {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .warning-header.malicious {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .warning-content {
+      padding: 20px;
+    }
+
+    .risk-score {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .risk-score.safe {
+      color: #28a745;
+    }
+
+    .risk-score.suspicious {
+      color: #ffc107;
+    }
+
+    .risk-score.malicious {
+      color: #dc3545;
+    }
+
+    .url-display {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 15px 0;
+      word-break: break-all;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .reasons {
+      margin: 15px 0;
+    }
+
+    .reasons h3 {
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .reasons ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .reasons li {
+      padding: 8px;
+      margin-bottom: 5px;
+      background: #f8f9fa;
+      border-left: 3px solid #667eea;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-close {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-close:hover {
+      background: #5a6268;
+    }
+
+    .btn-proceed {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-proceed:hover {
+      background: #c82333;
+    }
+
+    .btn-safe {
+      background: #28a745;
+      color: white;
+    }
+
+    .btn-safe:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="warning-container">
+    <div class="warning-header" id="header">
+      <span id="headerText">Security Warning</span>
+    </div>
+    <div class="warning-content">
+      <div class="risk-score" id="riskScore">Risk Score: 0/100</div>
+      <div class="url-display" id="urlDisplay"></div>
+      <div class="reasons">
+        <h3>Analysis Details:</h3>
+        <ul id="reasonsList"></ul>
+      </div>
+      <div class="button-group">
+        <button class="btn-close" id="closeBtn">Close</button>
+        <button class="btn-proceed" id="proceedBtn" style="display: none;">Proceed Anyway</button>
+        <button class="btn-safe" id="safeBtn" style="display: none;">Safe to Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="warning-popup.js"></script>
+</body>
+</html>
