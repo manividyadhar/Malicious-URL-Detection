@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
-# Step 1: Upgrade pip normally
-pip install --upgrade pip
+echo "Upgrading pip tools..."
+pip install --upgrade pip setuptools wheel
 
-# Step 2: Install build tools FIRST (no flags)
-pip install setuptools wheel
+echo "Installing base dependencies..."
+pip install -r requirements-base.txt
 
-# Step 3: Install base dependencies (disable PEP517)
-pip install --no-use-pep517 -r requirements-base.txt
-
-# Step 4: Install ML dependencies (disable PEP517)
-pip install --no-use-pep517 -r requirements-ml.txt
+echo "Installing ML dependencies..."
+pip install -r requirements-ml.txt
