@@ -1,10 +1,14 @@
 import { motion } from 'framer-motion';
-import { Shield } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import Logo from './Logo';
 
 export default function Navbar() {
     const location = useLocation();
     const isHome = location.pathname === '/';
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 p-4">
@@ -13,12 +17,21 @@ export default function Navbar() {
                 animate={{ y: 0 }}
                 className="max-w-6xl mx-auto px-6 py-3 rounded-2xl glass flex items-center justify-between"
             >
-                <Link to="/" className="flex items-center gap-2 group">
-                    <div className="p-2 bg-blue-600 rounded-lg text-white group-hover:rotate-12 transition-transform">
-                        <Shield className="w-6 h-6" />
-                    </div>
-                    <span className="font-extrabold text-xl tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600">
-                        URGUARD
+                <Link
+                    to="/"
+                    onClick={scrollToTop}
+                    className="flex items-center gap-3 group transition-all"
+                    aria-label="URL Detector Home"
+                >
+                    <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                        className="flex-shrink-0"
+                    >
+                        <Logo className="w-8 h-8 md:w-10 md:h-10" />
+                    </motion.div>
+                    <span className="font-extrabold text-lg md:text-xl tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 group-hover:from-blue-600 group-hover:to-indigo-600 transition-all duration-300">
+                        URL Detector
                     </span>
                 </Link>
 
