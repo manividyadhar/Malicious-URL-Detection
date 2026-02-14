@@ -3,12 +3,15 @@
     "version": "1.0.0",
     "description": "Browser extension for malicious URL detection",
     "scripts": {
-        "build": "tsc && node scripts/copy-files.js",
+        "build": "tsc && node scripts/generate-icons.js && node scripts/copy-files.js",
+        "package": "node scripts/package.js",
+        "build:extension": "npm run build && npm run package",
         "watch": "tsc --watch",
         "clean": "rimraf dist"
     },
     "devDependencies": {
         "@types/chrome": "^0.0.256",
+        "archiver": "^7.0.1",
         "rimraf": "^5.0.5",
         "typescript": "^5.3.3"
     }

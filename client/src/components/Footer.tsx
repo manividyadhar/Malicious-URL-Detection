@@ -9,7 +9,7 @@ export default function Footer() {
                     <div className="md:col-span-2">
                         <div className="flex items-center gap-2 mb-6">
                             <Shield className="w-8 h-8 text-blue-500" />
-                            <span className="font-extrabold text-2xl tracking-tighter">URGUARD</span>
+                            <span className="font-extrabold text-2xl tracking-tighter">URL SCANNER</span>
                         </div>
                         <p className="text-slate-400 max-w-sm mb-8 leading-relaxed">
                             The ultimate deterministic URL detection platform.
@@ -59,7 +59,7 @@ export default function Footer() {
                 </div>
 
                 <div className="pb-8 border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm">
-                    <p>© 2026 URGUARD Security. All rights reserved.</p>
+                    <p>© 2026 URL Scanner Security. All rights reserved.</p>
                     <div className="flex gap-8">
                         <a href="#" className="hover:text-white transition-colors">Privacy</a>
                         <a href="#" className="hover:text-white transition-colors">Terms</a>

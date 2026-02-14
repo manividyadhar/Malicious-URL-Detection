@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
     Zap,
     ShieldCheck,
@@ -7,286 +6,250 @@ import {
     Terminal,
     Lock,
     Download,
-    ArrowRight,
-    Layers,
-    CheckCircle2
+    Server
 } from 'lucide-react';
 import URLScanner from '../components/URLScanner';
 
-const FeatureCard = ({ icon: Icon, title, description, index }: any) => {
+const FeatureCard = ({ icon: Icon, title, description, delay }: any) => {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            whileHover={{
-                y: -10,
-                scale: 1.02,
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)"
-            }}
-            className="p-8 rounded-3xl bg-white border border-slate-100 shadow-xl shadow-slate-200/50 transition-all duration-300 group hover:border-blue-500/30"
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay }}
+            className="p-8 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
         >
-            <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                <Icon className="w-7 h-7" />
+            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                <Icon className="w-6 h-6" />
             </div>
             <h3 className="text-xl font-bold text-slate-900 mb-3">{title}</h3>
-            <p className="text-slate-600 leading-relaxed">{description}</p>
+            <p className="text-slate-600 leading-relaxed text-sm">{description}</p>
         </motion.div>
     );
 };
 
-const InstallStep = ({ step, title, description, index }: any) => {
-    return (
-        <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="relative flex items-start gap-8 group"
-        >
-            {index !== 6 && (
-                <div className="absolute left-[27px] top-12 bottom-0 w-1 bg-slate-100 group-last:hidden" />
-            )}
-            <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="z-10 w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-500/40 shrink-0"
-            >
-                {step}
-            </motion.div>
-            <div className="pt-3 pb-12">
-                <h3 className="text-xl font-bold text-slate-900 mb-2">{title}</h3>
-                <p className="text-slate-600 leading-relaxed">{description}</p>
-            </div>
-        </motion.div>
-    );
-};
+const TrustBadge = ({ icon: Icon, label }: any) => (
+    <div className="flex items-center gap-2 text-slate-500 bg-slate-50 px-4 py-2 rounded-full border border-slate-100">
+        <Icon className="w-4 h-4" />
+        <span className="text-sm font-medium">{label}</span>
+    </div>
+);
 
 export default function Home() {
-    const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start start", "end end"]
-    });
-
-    const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-
     return (
-        <div ref={containerRef} className="relative min-h-screen font-sans selection:bg-blue-500/30">
-            {/* Background elements */}
-            <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
-                <motion.div
-                    style={{ y: backgroundY }}
-                    className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-200/30 blur-[120px]"
-                />
-                <motion.div
-                    style={{ y: backgroundY }}
-                    className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-200/20 blur-[150px]"
-                />
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
-            </div>
+        <div className="relative font-sans text-slate-900 overflow-hidden">
 
             {/* Hero Section */}
-            <section id="home" className="relative pt-40 pb-20 px-4">
-                <div className="max-w-6xl mx-auto text-center">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-600 font-bold text-xs uppercase tracking-widest mb-8 border border-blue-100 shadow-sm"
-                    >
-                        <Zap className="w-3 h-3 fill-blue-600" />
-                        Next-Gen Security Node
-                    </motion.div>
-
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-5xl md:text-8xl font-black text-slate-900 tracking-tight leading-[0.95] mb-8"
-                    >
-                        Analyze URLs with <br />
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 bg-[length:200%_auto] animate-gradient-x">
-                            Unrivaled Precision
-                        </span>
-                    </motion.h1>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="max-w-2xl mx-auto text-lg md:text-xl text-slate-600 leading-relaxed mb-12"
-                    >
-                        Protect yourself from phishing, malware, and malicious websites using
-                        our advanced deterministic detection engine. Real-time safety, simplified.
-                    </motion.p>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="flex flex-col sm:flex-row items-center justify-center gap-4"
-                    >
-                        <motion.a
-                            href="#scanner"
-                            whileHover={{
-                                scale: 1.05,
-                                boxShadow: "0 20px 40px -10px rgba(37, 99, 235, 0.4)"
-                            }}
-                            whileTap={{ scale: 0.95 }}
-                            className="px-8 py-4 rounded-2xl bg-blue-600 text-white font-bold text-lg shadow-xl shadow-blue-500/20 flex items-center gap-2 group"
-                        >
-                            Analyze URL Now
-                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                        </motion.a>
-                        <motion.a
-                            href="#download"
-                            whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 1)" }}
-                            whileTap={{ scale: 0.95 }}
-                            className="px-8 py-4 rounded-2xl bg-white/70 backdrop-blur-md text-slate-900 font-bold text-lg shadow-xl shadow-slate-200/50 border border-slate-200"
-                        >
-                            Download Extension
-                        </motion.a>
-                    </motion.div>
+            <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 overflow-hidden">
+                {/* Abstract Background */}
+                <div className="absolute inset-0 -z-10">
+                    <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-blue-50 rounded-full blur-[120px] opacity-60 translate-x-1/4 -translate-y-1/4" />
+                    <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-indigo-50 rounded-full blur-[100px] opacity-60 -translate-x-1/4 translate-y-1/4" />
+                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
                 </div>
 
-                {/* Floating elements animation */}
-                <div className="absolute top-[20%] left-[5%] hidden lg:block">
+                <div className="container mx-auto max-w-5xl text-center relative z-10">
                     <motion.div
-                        animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
-                        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-20 h-20 rounded-2xl glass flex items-center justify-center text-blue-500 rotate-[-12deg] shadow-2xl"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
                     >
-                        <ShieldCheck className="w-10 h-10" />
-                    </motion.div>
-                </div>
-                <div className="absolute top-[40%] right-[5%] hidden lg:block">
-                    <motion.div
-                        animate={{ y: [0, 20, 0], rotate: [0, -5, 0] }}
-                        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-24 h-24 rounded-3xl glass flex items-center justify-center text-indigo-500 rotate-[12deg] shadow-2xl"
-                    >
-                        <Lock className="w-12 h-12" />
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-8 border border-blue-100">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                            </span>
+                            Live Threat Intelligence
+                        </div>
+
+                        <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-slate-900 mb-8 leading-[1.1]">
+                            Secure Your Browsing with <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+                                Artificial Intelligence
+                            </span>
+                        </h1>
+
+                        <p className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                            Detect malicious URLs, phishing attempts, and malware in real-time.
+                            Built for developers and security-conscious users who demand precision.
+                        </p>
+
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                            <motion.a
+                                href="#scanner"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="w-full sm:w-auto px-8 py-4 bg-slate-900 text-white rounded-xl font-bold shadow-lg hover:bg-slate-800 transition-all flex items-center justify-center gap-2"
+                            >
+                                <Zap className="w-5 h-5" />
+                                Start Scanning
+                            </motion.a>
+                            <motion.a
+                                href="#install"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="w-full sm:w-auto px-8 py-4 bg-white text-slate-900 border border-slate-200 rounded-xl font-bold shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2"
+                            >
+                                <Download className="w-5 h-5" />
+                                Get Extension
+                            </motion.a>
+                        </div>
+
+                        <div className="flex flex-wrap justify-center gap-4 opacity-80">
+                            <TrustBadge icon={ShieldCheck} label="Bank-Grade Security" />
+                            <TrustBadge icon={Lock} label="Zero-Knowledge Privacy" />
+                            <TrustBadge icon={Zap} label="<50ms Latency" />
+                        </div>
                     </motion.div>
                 </div>
             </section>
 
             {/* Scanner Section */}
-            <section id="scanner" className="py-20 px-4 bg-slate-50/50 relative overflow-hidden">
-                <motion.div
-                    animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
-                    transition={{ duration: 20, repeat: Infinity }}
-                    className="absolute -top-[20%] -left-[10%] w-[40%] h-[40%] rounded-full bg-blue-100/50 blur-[100px] z-0"
-                />
-                <div className="container mx-auto relative z-10">
-                    <URLScanner />
+            <section id="scanner" className="py-24 bg-white relative">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-4xl mx-auto relative cursor-default">
+                        {/* Decorative blobbies behind scanner */}
+                        <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-[2.5rem] blur-xl opacity-50" />
+
+                        <div className="relative">
+                            <URLScanner />
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            {/* Features Section */}
-            <section id="features" className="py-32 px-4 relative">
-                <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-20">
-                        <motion.h2
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="text-4xl md:text-5xl font-black text-slate-900 mb-6"
-                        >
-                            Advanced Detection Features
-                        </motion.h2>
-                        <p className="max-w-2xl mx-auto text-slate-600 text-lg">
-                            Our engine combines multiple security vectors to provide the most
-                            accurate safety verdict for any URL you encounter.
+            {/* Features Grid */}
+            <section id="features" className="py-24 bg-slate-50">
+                <div className="container mx-auto px-4 max-w-6xl">
+                    <div className="text-center max-w-3xl mx-auto mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                            Enterprise-Grade Detection Engine
+                        </h2>
+                        <p className="text-slate-600 text-lg">
+                            We use advanced heuristics and machine learning to identify threats that traditional scanners miss.
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {[
-                            { icon: Zap, title: "Instant Analysis", description: "Get results in milliseconds with our highly optimized rust-compiled detection engine." },
-                            { icon: Layers, title: "15+ Security Markers", description: "Analyzes entropy, TLD structure, multi-subdomains, IP presence and phishing keywords." },
-                            { icon: ShieldCheck, title: "Phishing Shield", description: "Detected patterns known to be used by scammers and high-risk banking phishes." },
-                            { icon: Globe, title: "Extension Integration", description: "Seamless real-time protection while you browse Chrome, Firefox, or Brave." },
-                            { icon: Terminal, title: "Power CLI Tool", description: "Automate your security workflow with our full-featured command-line interface." },
-                            { icon: Lock, title: "Privacy Guarantee", description: "Zero logging. No URLs are stored. All analysis happens and expires in memory." }
-                        ].map((feature, idx) => (
-                            <FeatureCard key={idx} {...feature} index={idx} />
-                        ))}
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <FeatureCard
+                            icon={Zap}
+                            title="Real-Time Analysis"
+                            description="Our Rust-compiled engine delivers verdicts in milliseconds, ensuring no latency in your browsing experience."
+                            delay={0}
+                        />
+                        <FeatureCard
+                            icon={Server}
+                            title="Deep Inspection"
+                            description="We analyze entropy, TLD structure, multi-subdomains, IP presence, and obfuscation techniques."
+                            delay={0.1}
+                        />
+                        <FeatureCard
+                            icon={ShieldCheck}
+                            title="Phishing Prevention"
+                            description="Automatically blocks known phishing kits and heuristics used by credential harvesters."
+                            delay={0.2}
+                        />
+                        <FeatureCard
+                            icon={Globe}
+                            title="Browser Integration"
+                            description="Seamlessly integrates with Chrome, Firefox, and Brave to protect you while you surf."
+                            delay={0.3}
+                        />
+                        <FeatureCard
+                            icon={Terminal}
+                            title="API & CLI"
+                            description="Automate your security workflows with our developer-friendly API and command-line tools."
+                            delay={0.4}
+                        />
+                        <FeatureCard
+                            icon={Lock}
+                            title="Privacy First"
+                            description="We don't store your browsing history. All analysis is performed ephemerally in memory."
+                            delay={0.5}
+                        />
                     </div>
                 </div>
             </section>
 
-            {/* Download Section */}
-            <section id="download" className="py-32 px-4">
-                <div className="max-w-5xl mx-auto rounded-[3rem] bg-slate-900 overflow-hidden relative shadow-3xl">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-indigo-600/20" />
-                    <motion.div
-                        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-                        transition={{ duration: 5, repeat: Infinity }}
-                        className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-blue-500 blur-[100px]"
-                    />
-
-                    <div className="relative z-10 p-12 md:p-20 text-center">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <h2 className="text-4xl md:text-6xl font-black text-white mb-8">
-                                Ready to Browsing <br />
-                                <span className="text-blue-400">Securely?</span>
+            {/* Installation Steps */}
+            <section id="install" className="py-24 bg-white">
+                <div className="container mx-auto px-4 max-w-5xl">
+                    <div className="grid md:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+                                Ready in 30 Seconds
                             </h2>
-                            <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-                                Join thousands of users who browse the web with real-time URL protection.
-                                Download URGUARD Extension for your favorite browser today.
+                            <p className="text-slate-600 text-lg mb-8">
+                                Get instant protection without complex configuration. Our extension works out of the box.
                             </p>
 
-                            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                                <motion.a
-                                    href="/malicious-url-detector-extension.zip"
-                                    download
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="px-10 py-5 rounded-2xl bg-white text-slate-900 font-black text-xl flex items-center gap-3 shadow-2xl shadow-white/10 group"
-                                >
-                                    <Download className="w-6 h-6 animate-bounce" />
-                                    Download for Chrome
-                                </motion.a>
-                                <div className="flex items-center gap-2 text-slate-400">
-                                    <CheckCircle2 className="w-5 h-5 text-blue-400" />
-                                    <span className="text-sm font-bold uppercase tracking-widest">Version v1.0.0 Stable</span>
+                            <div className="space-y-8">
+                                {[
+                                    { title: "Download", desc: "Get the extension package" },
+                                    { title: "Install", desc: "Load unpacked in Chrome" },
+                                    { title: "Protect", desc: "Enjoy safer browsing" }
+                                ].map((step, i) => (
+                                    <div key={i} className="flex gap-4">
+                                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                                            {i + 1}
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-slate-900">{step.title}</h4>
+                                            <p className="text-slate-500 text-sm">{step.desc}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-3xl transform rotate-3 opacity-10"></div>
+                            <div className="bg-slate-900 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+                                <div className="flex items-center gap-2 mb-6 border-b border-slate-800 pb-4">
+                                    <div className="w-3 h-3 rounded-full bg-red-500" />
+                                    <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                                    <div className="w-3 h-3 rounded-full bg-green-500" />
+                                </div>
+                                <div className="space-y-4 font-mono text-sm">
+                                    <div className="text-green-400">$ urlscanner install</div>
+                                    <div className="text-slate-300">Downloading package... <span className="text-green-400">Done</span></div>
+                                    <div className="text-slate-300">Verifying signature... <span className="text-green-400">Valid</span></div>
+                                    <div className="text-slate-300">Installing dependencies...</div>
+                                    <div className="text-blue-400">URL SCANNER is now active and monitoring.</div>
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Installation Instructions */}
-            <section id="install" className="py-32 px-4 bg-white">
-                <div className="max-w-4xl mx-auto">
-                    <div className="mb-20">
-                        <h2 className="text-4xl font-black text-slate-900 mb-6 text-center">How to Install</h2>
-                        <p className="text-slate-600 text-center max-w-lg mx-auto">
-                            Setting up URGUARD is fast and easy. Follow these simple steps
-                            to get real-time browser protection.
-                        </p>
-                    </div>
+            {/* CTA Section */}
+            <section className="py-24 px-4 bg-slate-900 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
+                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600 rounded-full blur-[150px] opacity-20"></div>
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-600 rounded-full blur-[150px] opacity-20"></div>
 
-                    <div className="space-y-0">
-                        {[
-                            { step: "01", title: "Download Archive", description: "Click the download button above to get the malicious-url-detector-extension.zip file." },
-                            { step: "02", title: "Extract Content", description: "Unzip the file to a permanent folder on your local machine." },
-                            { step: "03", title: "Open Extensions", description: "Navigate to chrome://extensions in your Chrome browser address bar." },
-                            { step: "04", title: "Developer Mode", description: "Locate and toggle the 'Developer Mode' switch in the top-right corner." },
-                            { step: "05", title: "Load Unpacked", description: "Click the 'Load unpacked' button that appears after enabling developer mode." },
-                            { step: "06", title: "Select Folder", description: "Browse to and select the extracted extension folder from step 2." },
-                            { step: "07", title: "Secure Browsing", description: "URGUARD is now active! Pin it to your toolbar for easy access to scanning." }
-                        ].map((step, idx) => (
-                            <InstallStep key={idx} {...step} index={idx} />
-                        ))}
-                    </div>
+                <div className="container mx-auto max-w-4xl text-center relative z-10">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+                        Join the future of web security
+                    </h2>
+                    <p className="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">
+                        Stop relying on outdated blocklists. Switch to deterministic, AI-powered URL analysis today.
+                    </p>
+                    <motion.a
+                        href="/malicious-url-detector-extension.zip"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-900 rounded-xl font-bold shadow-lg hover:shadow-xl hover:bg-slate-50 transition-all"
+                    >
+                        <Download className="w-5 h-5" />
+                        Download Now - It's Free
+                    </motion.a>
+                    <p className="mt-6 text-slate-500 text-sm">
+                        Requires Chrome, Firefox, or Brave Browser
+                    </p>
                 </div>
             </section>
-
-        </div >
+        </div>
     );
 }

@@ -2,9 +2,9 @@
     "name": "@malicious-url-detector/cli",
     "version": "1.0.0",
     "description": "CLI tool for malicious URL detection",
-    "main": "index.js",
+    "main": "dist/index.js",
     "bin": {
-        "url-detector": "./index.js"
+        "url-detector": "./dist/index.js"
     },
     "scripts": {
         "build": "tsc",
