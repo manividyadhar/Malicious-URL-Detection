@@ -6,7 +6,7 @@
  * Example: node cli/index.js https://example.com
  */
 
-import { analyzeURL } from '@malicious-url-detector/shared';
+import { analyzeURL } from '../shared/dist';
 
 // ANSI color codes for terminal output
 const colors = {
