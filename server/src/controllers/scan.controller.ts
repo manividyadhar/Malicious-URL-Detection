@@ -5,7 +5,7 @@
  */
 
 import { Request, Response, NextFunction } from 'express';
-import { analyzeURL } from '../../../shared/dist';
+import { analyzeURL } from '@malicious-url-detector/shared';
 
 /**
  * Check URL for malicious content

@@ -5,6 +5,7 @@
         "lib": [
             "ES2020"
         ],
+        "rootDir": "./src",
         "outDir": "./dist",
         "removeComments": true,
         "strict": true,
@@ -20,8 +21,7 @@
         ]
     },
     "include": [
-        "src/**/*",
-        "tests/**/*"
+        "src/**/*"
     ],
     "exclude": [
         "node_modules",
