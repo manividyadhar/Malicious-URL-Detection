@@ -3,15 +3,8 @@
     "version": "1.0.0",
     "description": "Comprehensive malicious URL detection system",
     "private": true,
-    "workspaces": [
-        "shared",
-        "server",
-        "client",
-        "cli",
-        "extension-v2"
-    ],
     "scripts": {
-        "build": "npm run build -w shared && npm run build -w server && npm run build -w client",
+        "build": "cd shared && npm install && npm run build && cd ../client && npm install && npm run build && cd ../server && npm install && npm run build",
         "start": "cd server && npm start",
         "dev:server": "cd server && npm run dev",
         "dev:client": "cd client && npm run dev",

@@ -18,7 +18,7 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
-        "@malicious-url-detector/shared": "workspace:*"
+        "@malicious-url-detector/shared": "file:../shared"
     },
     "devDependencies": {
         "@types/node": "^20.10.6",
