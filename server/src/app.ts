@@ -14,14 +14,13 @@ import routes from "./routes";
 app.use("/api", routes);
 
 // Serve frontend build
-// Path adjusted for production runtime in dist/src/
-const clientDistPath = path.join(__dirname, "../../../client/dist");
+const clientPath = path.join(__dirname, "../../client/dist");
 
-app.use(express.static(clientDistPath));
+app.use(express.static(clientPath));
 
 // SPA fallback
-app.get("*", (req, res) => {
-    res.sendFile(path.join(clientDistPath, "index.html"));
+app.get("*", (_, res) => {
+    res.sendFile(path.join(clientPath, "index.html"));
 });
 
 export default app;
