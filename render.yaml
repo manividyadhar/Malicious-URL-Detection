@@ -1,0 +1,19 @@
+services:
+  # Full Stack Application (API + Frontend)
+  - type: web
+    name: malicious-url-detection
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: |
+      npm install
+      cd shared && npm install && npm run build
+      cd ../server && npm install && npm run build
+      cd ../client && npm install && npm run build
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        sync: false
+    healthCheckPath: /api/health

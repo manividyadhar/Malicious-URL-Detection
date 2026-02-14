@@ -1,0 +1,15 @@
+{
+    "name": "malicious-url-detector-extension",
+    "version": "1.0.0",
+    "description": "Browser extension for malicious URL detection",
+    "scripts": {
+        "build": "tsc && node scripts/copy-files.js",
+        "watch": "tsc --watch",
+        "clean": "rimraf dist"
+    },
+    "devDependencies": {
+        "@types/chrome": "^0.0.256",
+        "rimraf": "^5.0.5",
+        "typescript": "^5.3.3"
+    }
+}

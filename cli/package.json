@@ -1,0 +1,28 @@
+{
+    "name": "@malicious-url-detector/cli",
+    "version": "1.0.0",
+    "description": "CLI tool for malicious URL detection",
+    "main": "index.js",
+    "bin": {
+        "url-detector": "./index.js"
+    },
+    "scripts": {
+        "build": "tsc",
+        "check:url": "ts-node index.ts"
+    },
+    "keywords": [
+        "url-detection",
+        "cli",
+        "security"
+    ],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "@malicious-url-detector/shared": "file:../shared"
+    },
+    "devDependencies": {
+        "@types/node": "^20.10.6",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.3.3"
+    }
+}
